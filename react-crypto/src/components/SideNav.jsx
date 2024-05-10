@@ -3,7 +3,14 @@ import { Box, HStack, Heading, Icon, Stack, Text } from "@chakra-ui/react"
 import { RxDashboard } from "react-icons/rx";
 import { LuArrowUpDown } from "react-icons/lu";
 import { BiSupport } from "react-icons/bi";
+import { Link, useLocation } from 'react-router-dom';
 const SideNav = () => {
+    const location = useLocation();
+
+    const isActiveLink = (link)=>{
+        return location.pathname == link;
+    };
+
     const navLinks =[
         {
         icon: RxDashboard ,
@@ -14,7 +21,7 @@ const SideNav = () => {
         {
         icon: LuArrowUpDown ,
         text: "Transactions",
-        link:"/transactions"
+        link:"/transactionpage"
 
     },
 
@@ -39,19 +46,23 @@ lg:"lg"
     {
         
         navLinks.map((nav)=>(
-
-            <HStack  key={nav.text} py="3" px="4"
+            <Link to={nav.link} key={nav.text}>
+            <HStack   py="3" px="4"
+             bg={isActiveLink(nav.link)? "#F3F3F7" : "transparent"}
+             color={isActiveLink(nav.link)? "#171717" : "#797E82"}
                 borderRadius="10px"
                 _hover={{
                     bg: "#F3F3F7",
                     color:"#171717"
                 }}
-                color="#797E82"
+                
             >
+
+
                 <Icon as={nav.icon}></Icon>
                 <Text fontSize="14px" fontWeight="medium">{nav.text}</Text>
             </HStack>
-
+            </Link>
 
         ))
 
@@ -60,17 +71,28 @@ lg:"lg"
     }</Box></Box>
  
  <Box mt="6" mx="12px" mb="6">
+
+
+    <Link to="/support">
+
  <HStack  py="3" px="4"
+
+ bg={isActiveLink("/support")? "#F3F3F7" : "transparent"}
+ color={isActiveLink("/support")? "#171717" : "#797E82"}
+
                 borderRadius="10px"
                 _hover={{
                     bg: "#F3F3F7",
                     color:"#171717"
                 }}
-                color="#797E82"
+                
             >
                 <Icon as={BiSupport}></Icon>
                 <Text fontSize="14px" fontWeight="medium">support</Text>
             </HStack>
+            
+            </Link>
+            
         </Box>
   </Stack>
   )
